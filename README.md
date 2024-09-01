@@ -29,3 +29,19 @@ Follow these instructions to set up and run the presentation on your local machi
    ```bash
    git clone https://github.com/your-username/js-presentation-template.git
    ```
+
+2. **install dependencies**
+
+   Install the required dependencies using npm:
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the Presentation**
+
+   Start the presentation server and monitor source files for changes:
+
+   ```bash
+   npm start
+   ```
