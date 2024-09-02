@@ -150,10 +150,17 @@ print("Hello, Python!")</textarea
         const output = document.getElementById("output");
         output.innerHTML = "";
 
-        Sk.configure({ output: (text) => (output.innerHTML += text + "<br>") });
-        Sk.misceval.asyncToPromise(() =>
-          Sk.importMainWithBody("<stdin>", false, code, true)
-        );
+        Sk.configure({
+          output: (text) => (output.innerHTML += text + "<br>"), // Append Skulpt output to the output element.
+        });
+        Sk.misceval
+          .asyncToPromise(() =>
+            Sk.importMainWithBody("<stdin>", false, code, true)
+          )
+          .catch((error) => {
+            output.innerHTML += `<br><span style="color: red;">Error: ${error.toString()}</span>`; // Display errors in red.
+            // Log the error to the console for debugging purposes.
+          });
       }
     </script>
 
