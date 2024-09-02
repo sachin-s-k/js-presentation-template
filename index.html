@@ -1,40 +1,202 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="mode" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+    <!-- Custom styles for light/dark mode toggle and footer -->
+    <script src="https://cdn.jsdelivr.net/npm/skulpt/dist/skulpt.min.js"></script>
+    <!-- Skulpt Core -->
+    <script src="https://cdn.jsdelivr.net/npm/skulpt/dist/skulpt-stdlib.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .header,
+      .footer {
+        position: fixed;
+        width: 100%;
+        left: 0;
+      }
+      .header {
+        top: 0;
+        background-color: #333;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+      }
+      .footer {
+        bottom: 0;
+        background: #333;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+      }
+      .reveal {
+        padding-top: 10px;
+      }
+      .watermark {
+        position: fixed;
+        bottom: 60px;
+        right: 20px;
+        opacity: 0.1;
+        z-index: 9999;
+      }
+      .toggle-btn {
+        position: fixed;
+        background: #fff;
+        top: 10px;
+        right: 20px;
+        padding: 5px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        z-index: 10000;
+      }
+    </style>
+  </head>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <h1 id="header-content">Welcome to the presentation</h1>
+    </div>
+    <button class="toggle-btn" id="theme-btn" onclick="handleToggle()">
+      Swich to Light Mode
+    </button>
+    <div class="reveal">
+      <div class="slides">
+        <section data-header="Welcome to JS Presentation Template">
+          <h1>Welcome to JS Presentation Template</h1>
+          <p>
+            This is an interactive, reusable JavaScript-based presentation
+            template.
+          </p>
+        </section>
+        <section data-header="Sildes with Images">
+          <h1>Sildes with Images</h1>
+          <img
+            src="https://via.placeholder.com/800x400"
+            alt="Image"
+            srcset=""
+            style="width: 80%"
+          />
+        </section>
+        <section data-header="Slide with a Chart">
+          <h2>Slide with a Chart</h2>
+          <canvas id="chart" width="400px" height="200px"></canvas>
+        </section>
+        <section data-header="Slide with code block">
+          <h2>Slide with code block</h2>
+          <pre><code class="language-javascript">function Intro(){
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+			console.log('Hello world')
+			}</code></pre>
+        </section>
+        <section data-header="Python code compiler">
+          <h2>Python code compiler</h2>
+          <textarea name="" id="python" style="width: 100%; height: 100px">
+print("Hello, Python!")</textarea
+          >
+          <button onclick="runCode()">Run</button>
+          <pre id="output"></pre>
+        </section>
+        <section data-header="Thank You!">
+          <h2>Thank You!</h2>
+          <p>
+            Feel free to customize this template and use it for your own
+            purposes.
+          </p>
+        </section>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>© 2024 Machine test Company. Contact: machinetest@example.com</p>
+    </div>
+
+    <!-- water mark -->
+    <img
+      src="https://via.placeholder.com/150x50"
+      class="watermark"
+      alt="Demo Logo"
+    />
+
+    <script>
+      function runCode() {
+        console.log("called");
+        const code = document.getElementById("python").value;
+        const output = document.getElementById("output");
+        output.innerHTML = "";
+
+        Sk.configure({ output: (text) => (output.innerHTML += text + "<br>") });
+        Sk.misceval.asyncToPromise(() =>
+          Sk.importMainWithBody("<stdin>", false, code, true)
+        );
+      }
+      Reveal.on("slidechanged", runCode());
+    </script>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      function handleToggle() {
+        const mode = document.getElementById("mode");
+        const toggleBtn = document.getElementById("theme-btn");
+        if (mode.getAttribute("href").includes("black.css")) {
+          mode.setAttribute("href", "dist/theme/white.css");
+          toggleBtn.textContent = "Switch to Dark Mode";
+        } else {
+          mode.setAttribute("href", "dist/theme/black.css");
+          toggleBtn.textContent = "Switch to Light Mode";
+        }
+      }
+
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+
+      function headerContentUpdate() {
+        const currentSlide = Reveal.getCurrentSlide();
+        const headerContent = currentSlide.getAttribute("data-header");
+        document.getElementById("header-content").textContent = headerContent;
+      }
+      Reveal.on("slidechanged", headerContentUpdate);
+      window.onload = headerContentUpdate;
+    </script>
+    <script>
+      var ctx = document.getElementById("chart").getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          datasets: [
+            {
+              label: "# of Votes",
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: "rgba(153, 102, 255, 0.6)",
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
 </html>
