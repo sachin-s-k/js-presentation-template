@@ -50,10 +50,12 @@
         right: 20px;
         opacity: 0.1;
         z-index: 9999;
+        height: 80px;
+        width: 80px;
       }
       .toggle-btn {
         position: fixed;
-        background: #fff;
+        background: #333;
         top: 10px;
         right: 20px;
         padding: 5px;
@@ -61,13 +63,14 @@
         border: 1px solid #ddd;
         cursor: pointer;
         z-index: 10000;
+        color: #fff;
       }
     </style>
   </head>
 
   <body>
     <!-- Header -->
-    <div class="header">
+    <div class="header" id="header-section">
       <h1 id="header-content">Welcome to the presentation</h1>
     </div>
     <button class="toggle-btn" id="theme-btn" onclick="handleToggle()">
@@ -75,6 +78,7 @@
     </button>
     <div class="reveal">
       <div class="slides">
+        <!-- Welcome slide -->
         <section data-header="Welcome to JS Presentation Template">
           <h1>Welcome to JS Presentation Template</h1>
           <p>
@@ -82,19 +86,22 @@
             template.
           </p>
         </section>
+        <!-- Slides with image -->
         <section data-header="Sildes with Images">
           <h1>Sildes with Images</h1>
           <img
-            src="https://via.placeholder.com/800x400"
+            src="https://wild.solutions/wp-content/uploads/2023/11/Web-3-marketing-agency-Singapore.png"
             alt="Image"
             srcset=""
-            style="width: 80%"
+            style="width: 80%; height: 350px"
           />
         </section>
+        <!-- Slides with chart -->
         <section data-header="Slide with a Chart">
           <h2>Slide with a Chart</h2>
           <canvas id="chart" width="400px" height="200px"></canvas>
         </section>
+        <!-- Slide with code block -->
         <section data-header="Slide with code block">
           <h2>Slide with code block</h2>
           <pre><code class="language-javascript">function Intro(){
@@ -102,14 +109,16 @@
 			console.log('Hello world')
 			}</code></pre>
         </section>
-        <section data-header="Python code compiler">
+        <!-- Slide with Python Code Compiler -->
+        <section data-header="Python code compiler" python-slide>
           <h2>Python code compiler</h2>
           <textarea name="" id="python" style="width: 100%; height: 100px">
 print("Hello, Python!")</textarea
           >
-          <button onclick="runCode()">Run</button>
+          <button onclick="runCode()">Run Python Code</button>
           <pre id="output"></pre>
         </section>
+        <!-- Slide with Thank you -->
         <section data-header="Thank You!">
           <h2>Thank You!</h2>
           <p>
@@ -121,18 +130,20 @@ print("Hello, Python!")</textarea
     </div>
 
     <!-- Footer -->
-    <div class="footer">
+    <div class="footer" id="footer-section">
       <p>© 2024 Machine test Company. Contact: machinetest@example.com</p>
     </div>
 
     <!-- water mark -->
+
     <img
-      src="https://via.placeholder.com/150x50"
+      src="./examples/assets/Lovepik_com-401740048-blue-technology-logo.png"
       class="watermark"
       alt="Demo Logo"
     />
 
     <script>
+      // function to run python code
       function runCode() {
         console.log("called");
         const code = document.getElementById("python").value;
@@ -144,7 +155,6 @@ print("Hello, Python!")</textarea
           Sk.importMainWithBody("<stdin>", false, code, true)
         );
       }
-      Reveal.on("slidechanged", runCode());
     </script>
 
     <script src="dist/reveal.js"></script>
@@ -152,15 +162,32 @@ print("Hello, Python!")</textarea
     <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
     <script>
+      // function to hnadle slide theme (light/dark mode)
       function handleToggle() {
         const mode = document.getElementById("mode");
         const toggleBtn = document.getElementById("theme-btn");
+        const footer = document.getElementById("footer-section");
+        const header = document.getElementById("header-section");
         if (mode.getAttribute("href").includes("black.css")) {
           mode.setAttribute("href", "dist/theme/white.css");
           toggleBtn.textContent = "Switch to Dark Mode";
+          footer.style.backgroundColor = "#f0f0f0";
+          footer.style.color = "#333";
+          header.style.backgroundColor = "#f0f0f0";
+          header.style.color = "#333";
+          toggleBtn.style.background = "#f0f0f0";
+          toggleBtn.style.color = "#333";
+          toggleBtn.style.border = "1px solid #333";
         } else {
           mode.setAttribute("href", "dist/theme/black.css");
           toggleBtn.textContent = "Switch to Light Mode";
+          footer.style.backgroundColor = "#333";
+          footer.style.color = "#fff";
+          header.style.backgroundColor = "#333";
+          header.style.color = "#fff";
+          toggleBtn.style.background = "#333";
+          toggleBtn.style.color = "#fff";
+          toggleBtn.style.border = "1px solid #ddd";
         }
       }
 
@@ -174,15 +201,28 @@ print("Hello, Python!")</textarea
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
       });
 
+      // function to update content in the header
       function headerContentUpdate() {
         const currentSlide = Reveal.getCurrentSlide();
         const headerContent = currentSlide.getAttribute("data-header");
         document.getElementById("header-content").textContent = headerContent;
       }
-      Reveal.on("slidechanged", headerContentUpdate);
+      Reveal.on("slidechanged", (event) => {
+        headerContentUpdate();
+        const currentSlide = Reveal.getCurrentSlide();
+        if (currentSlide.hasAttribute("python-slide")) {
+          clearPythonOutput();
+        }
+      });
       window.onload = headerContentUpdate;
+
+      function clearPythonOutput() {
+        const output = document.getElementById("output");
+        output.innerHTML = "";
+      }
     </script>
     <script>
+      // for creating chart in slide
       var ctx = document.getElementById("chart").getContext("2d");
       var myChart = new Chart(ctx, {
         type: "bar",
