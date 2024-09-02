@@ -27,10 +27,18 @@ Follow these instructions to set up and run the presentation on your local machi
    Clone the `js-presentation-template` repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/js-presentation-template.git
+   git clone https://github.com/sachin-s-k/js-presentation-template.git
    ```
 
-2. **install dependencies**
+2. **Navigate to the js-presentation-template Directory**
+
+   Change your working directory to js-presentation-template :
+
+   ```bash
+   cd js-presentation-template
+   ```
+
+3. **Install dependencies**
 
    Install the required dependencies using npm:
 
@@ -38,7 +46,7 @@ Follow these instructions to set up and run the presentation on your local machi
    npm install
    ```
 
-3. **Run the Presentation**
+4. **Run the Presentation**
 
    Start the presentation server and monitor source files for changes:
 
