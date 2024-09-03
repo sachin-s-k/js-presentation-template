@@ -75,6 +75,9 @@
         display: flex; /* Align icon and text */
         align-items: center; /* Center items vertically */
         gap: 10px;
+        width: 40px; /* Fixed width */
+        height: 40px;
+        justify-content: center;
       }
       .toggle-btn:hover {
         background-color: #bdbbbb; /* Slightly darker background on hover */
@@ -233,7 +236,7 @@ print("Hello, Python!")</textarea
           header.style.color = "#333";
           toggleBtn.style.background = "#f0f0f0";
           toggleBtn.style.color = "#333";
-          //toggleBtn.style.border = "1px solid #333";
+          toggleBtn.style.border = "1px solid #333";
           icon.classList.replace("fa-moon", "fa-sun");
           icon.classList.replace("far", "fas");
         } else {
@@ -245,7 +248,7 @@ print("Hello, Python!")</textarea
           header.style.color = "#fff";
           toggleBtn.style.background = "#333";
           toggleBtn.style.color = "#fff";
-          //toggleBtn.style.border = "1px solid #ddd";
+          toggleBtn.style.border = "1px solid #ddd";
           icon.classList.replace("fa-sun", "fa-moon"); // Switch to outlined moon icon
           icon.classList.replace("fas", "far");
         }
