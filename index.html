@@ -15,11 +15,16 @@
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
     <!-- Custom styles for light/dark mode toggle and footer -->
     <script src="https://cdn.jsdelivr.net/npm/skulpt/dist/skulpt.min.js"></script>
     <!-- Skulpt Core -->
     <script src="https://cdn.jsdelivr.net/npm/skulpt/dist/skulpt-stdlib.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
       .header,
       .footer {
@@ -64,8 +69,19 @@
         cursor: pointer;
         z-index: 10000;
         color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, color 0.3s, transform 0.2s; /* Smooth transitions */
+        display: flex; /* Align icon and text */
+        align-items: center; /* Center items vertically */
+        gap: 10px;
       }
-      button {
+      .toggle-btn:hover {
+        background-color: #bdbbbb; /* Slightly darker background on hover */
+        transform: translateY(-2px); /* Raise button slightly on hover */
+      }
+
+      .run-button {
         background-color: #4caf50;
         color: white;
         padding: 12px 24px;
@@ -77,20 +93,23 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
-      button:hover {
+      .run-button:hover {
         background-color: #45a049;
         transform: translateY(-2px);
       }
 
-      button:active {
+      .run-button:active {
         background-color: #3e8e41;
         box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
         transform: translateY(0);
       }
 
-      button:focus {
+      .run-button:focus {
         outline: none;
         box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+      }
+      .toggle-btn .icon {
+        font-size: 22px; /* Larger size for the icon */
       }
     </style>
   </head>
@@ -101,7 +120,7 @@
       <h1 id="header-content">Welcome to the presentation</h1>
     </div>
     <button class="toggle-btn" id="theme-btn" onclick="handleToggle()">
-      Swich to Light Mode
+      <i class="far fa-moon icon"></i>
     </button>
     <div class="reveal">
       <div class="slides">
@@ -142,7 +161,9 @@
           <textarea name="" id="python" style="width: 100%; height: 100px">
 print("Hello, Python!")</textarea
           >
-          <button onclick="runCode()">Run Python Code</button>
+          <button class="run-button" onclick="runCode()">
+            Run Python Code
+          </button>
           <pre id="output"></pre>
         </section>
         <!-- Slide with Thank you -->
@@ -202,9 +223,10 @@ print("Hello, Python!")</textarea
         const toggleBtn = document.getElementById("theme-btn");
         const footer = document.getElementById("footer-section");
         const header = document.getElementById("header-section");
+        const icon = toggleBtn.querySelector(".icon");
         if (mode.getAttribute("href").includes("black.css")) {
           mode.setAttribute("href", "dist/theme/white.css");
-          toggleBtn.textContent = "Switch to Dark Mode";
+          //   toggleBtn.textContent = "LIGHT";
           footer.style.backgroundColor = "#f0f0f0";
           footer.style.color = "#333";
           header.style.backgroundColor = "#f0f0f0";
@@ -212,9 +234,11 @@ print("Hello, Python!")</textarea
           toggleBtn.style.background = "#f0f0f0";
           toggleBtn.style.color = "#333";
           toggleBtn.style.border = "1px solid #333";
+          icon.classList.replace("fa-moon", "fa-sun");
+          icon.classList.replace("far", "fas");
         } else {
           mode.setAttribute("href", "dist/theme/black.css");
-          toggleBtn.textContent = "Switch to Light Mode";
+          //   toggleBtn.textContent = "DARK";
           footer.style.backgroundColor = "#333";
           footer.style.color = "#fff";
           header.style.backgroundColor = "#333";
@@ -222,7 +246,10 @@ print("Hello, Python!")</textarea
           toggleBtn.style.background = "#333";
           toggleBtn.style.color = "#fff";
           toggleBtn.style.border = "1px solid #ddd";
+          icon.classList.replace("fa-sun", "fa-moon"); // Switch to outlined moon icon
+          icon.classList.replace("fas", "far");
         }
+        toggleBtn.prepend(icon);
       }
 
       // More info about initialization & config:
